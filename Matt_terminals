@@ -1,0 +1,4 @@
+#!/bin/bash
+SET_TITLE="Build" gnome-terminal --tab-with-profile=build --working-directory="/home/matt/git/phalanx-picozed" 
+SET_TITLE="Git"   gnome-terminal --tab-with-profile=git --working-directory="/home/matt/git/phalanx-picozed" 
+SET_TITLE="Vim"   gnome-terminal --tab-with-profile=vim --working-directory="/home/matt/git/phalanx-picozed/Xilinx/SDK/alpha_live.sdk"
