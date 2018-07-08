@@ -1,0 +1,2 @@
+#!/bin/bash
+wine /home/confuted/.wine/drive_c/Program\ Files/Zwift/ZwiftLauncher.exe

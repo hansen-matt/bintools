@@ -1,0 +1,96 @@
+#!/bin/bash
+#lpdf: Converts LaTeX source files to PDF, cleans up the intermediate files,
+#and opens them in okular if okular is not already open.
+#Author: Matt Hansen, confuted@gmail.com
+#First written: 11/28/2005
+#Last Modified: 03/16/2013 : Escape spaces in directory for last_run script
+
+#Spell check using
+#ispell -t <filename.tex>
+
+SCRIPTNAME=`basename $0`
+DIRNAME=`dirname $0`
+CURRENTDIR=`$PWD`
+DATE=`date`
+LASTRUN="$HOME/.$SCRIPTNAME"
+SAFE=0
+
+if [ $# -ne 0 ]; then
+	#A set of parameters was passed to the script.
+	#Save them for next time in a script at ~/.$SCRIPTNAME
+	FILENAME=`basename $1`
+	echo "#\\bin\\bash" > $LASTRUN
+	echo "echo \"No parameters passed to $SCRIPTNAME, defaulting to last set of parameters used.\"" >> $LASTRUN
+	echo "echo \"$SCRIPTNAME was last run\" $DATE" >> $LASTRUN
+	echo "echo \"\"" >> $LASTRUN
+	echo "cd '$PWD'" >> $LASTRUN
+	echo "$DIRNAME/$SCRIPTNAME $@" >> $LASTRUN
+	if [ "$1" = "-safe" ]; then
+		echo "Using SAFE mode"
+		SAFE=1
+		shift
+	fi
+	if [ -e "$1.tex" ]; then
+		latex $1.tex
+
+		if [ $? ]; then
+			if [ $SAFE -eq 0 ]; then
+				rm $1.log 
+				rm $1.aux 
+			fi
+			echo "LaTeX compilation complete"
+			dvipdf $1.dvi
+			if [ $? ]; then
+				echo "dvi --> pdf conversion successful"
+				if [ $SAFE -eq 0 ]; then
+					rm $1.dvi
+				fi
+			else
+				echo "Error: dvipdf $1.dvi failed."
+				exit 102
+			fi
+		else
+			echo "Error: latex $1.tex failed."
+			exit 101
+		fi
+
+		if [ -n "$( ps -ef | grep "okular $1.pdf" | grep -v grep )" ]; then
+			:
+		else
+			if [ -n "$DISPLAY" ]; then
+				if [ -e "$1.pdf" ]; then
+					echo "Opening $1.pdf..."
+					okular $1.pdf &
+				else
+					echo "Error: $1.pdf does not exist."
+					exit 103
+				fi 
+			else
+				echo "Warning: X server not running, will not open PDF."
+				exit 0
+			fi
+		fi
+		echo ""
+	else
+		echo "Error: $1.tex does not exist."
+		exit 100
+	fi
+	exit 0
+else
+	if [ -e $LASTRUN ]; then
+		#Run the script in $LASTRUN, which will run this script again
+		#with the last set of parameters.
+		sh $LASTRUN
+		exit $?
+	else
+		echo "$SCRIPTNAME: Converts LaTeX source files to PDF, cleans up the intermediate files, and"
+		echo "opens them in okular if okular is not already open."
+		echo ""
+		echo "Usage: $SCRIPTNAME [flags] filename (omit .tex suffix)"
+		echo ""
+		echo "Flags: -safe : Do not clean up intermediate files"
+		exit 0
+	fi
+fi
+
+cd $CURRENTDIR

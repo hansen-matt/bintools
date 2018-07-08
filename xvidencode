@@ -1,0 +1,3 @@
+#!/bin/bash
+mencoder dvd:// -ovc lavc -oac lavc -ffourcc DX50 -o $1
+

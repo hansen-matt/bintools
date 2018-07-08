@@ -1,0 +1,534 @@
+#!/bin/bash
+#
+# This program is free software, licensed under the GNU GPL, >=2.0.
+# This software comes with absolutely NO WARRANTY. Use at your own risk!
+#
+
+TRUE=1
+FALSE=0
+
+FILENAME="$1"
+EXTENSION=
+FILETYPE=0
+
+REMOTEUSER=
+SERVER=
+PRINTERNAME=
+USEPDF=$FALSE
+
+
+#File types
+BMP=100
+GIF=101
+JPEG=102
+MSOffice=103
+OOo=104
+PDF=105
+PNG=106
+PS=107
+TARGA=108
+TEXT=109
+
+#Return codes
+NOFILE=201
+FILEDETECTIONFAILED=202
+INVALIDPRINTER=203
+NOPARAMETERS=204
+UNKNOWN=254
+UNSUPPORTED=255
+
+main()
+{
+	if [ -e "$1" ]; then
+		if [ -z "$SERVER" ]; then
+			listprinters
+			findpdf2ps
+		fi
+		determinefiletype
+		ERRORCODE=$?
+		if [ "$ERRORCODE" -eq "0" ]; then 	#file type successfully determined
+			if   [ $FILETYPE -eq $BMP ]; 			then	
+				printbmp "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $GIF ]; 			then	
+				printgif "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $JPEG ]; 		then	
+				printjpeg "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $MSOffice ]; 	then 	
+				printmsoffice "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $OOo ]; 			then	
+				printopenoffice "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $PDF ]; 			then	
+				printpdf "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $PNG ]; 			then	
+				printpng "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $PS ]; 			then	
+				printps "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $TARGA ]; 		then	
+				printtarga "$FILENAME"
+				ERRORCODE=$?
+			elif [ $FILETYPE -eq $TEXT ]; 		then	
+				printtext "$FILENAME"
+				ERRORCODE=$?
+			else
+				echo "ERROR: An unknown error occured"
+				exit $UNKNOWN
+			fi	
+		else		#determinefiletype() encountered an error
+			if [ $ERRORCODE -eq $NOFILE ]; then
+				echo "ERROR: File "$FILENAME" not found!"
+				exit $NOFILE
+			elif	[ $ERRORCODE -eq $FILEDETECTIONFAILED ]; then
+				echo "ERROR: Unable to detect file type!"
+				exit $FILEDETECTIONFAILED
+			else
+				echo "ERROR: An unknown error occurred"
+				exit $UNKNOWN
+			fi
+		fi
+	else #$1 doesn't exist
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+	exit 0
+}
+
+
+#MAKE IT USE PDF FILES, AND FIX THE ''"" ISSUES
+
+determinefiletype()
+{
+	#if filename contains periods, ext = stuff after period
+	if [ -e "$FILENAME" ]; then
+		#'file' first, then extension
+		FILETYPE=$( file "$FILENAME" )
+		EXTENSION=$( echo "$FILENAME" |  grep  -o \.[[:alnum:]]*$ )
+
+		if [ -n "$( echo $FILETYPE | grep -i bitmap )" ]; then
+			echo "Bitmap image file detected"
+			FILETYPE=$BMP
+		elif [ -n "$( echo $FILETYPE | grep -i	GIF )" ]; then
+			echo "Gif image file detected"
+			FILETYPE=$GIF
+		elif [ -n "$( echo $FILETYPE | grep -i JPEG )" ]; then
+			echo "Jpeg image file detected"
+			FILETYPE=$JPEG
+		elif [ -n "$( echo $FILETYPE | grep -i Office )" ]; then
+			echo "Microsoft Office document detected"
+			FILETYPE=$MSOffice
+		elif [ -n "$( echo $FILETYPE | grep -i PDF )" ]; then
+			echo "PDF detected"
+			FILETYPE=$PDF
+		elif [ -n "$( echo $FILETYPE | grep -i Targa )" ]; then
+			echo "Targa image file detected"
+			FILETYPE=$TARGA
+		elif [ -n "$( echo $FILETYPE | grep -i text )" ]; then
+			if [ -n "$( echo $FILETYPE | grep -i postscript )" ]; then
+				echo "Postscript file detected"
+				FILETYPE=$PS
+			else
+				echo "Plain text file detected"
+				FILETYPE=$TEXT
+			fi
+		elif [ -n "$( echo $FILETYPE | grep -i PNG )" ]; then
+			echo "PNG image file detected"
+			FILETYPE=$PNG
+		elif [ -n "$( echo $FILETYPE | grep -i Zip )" ]; then
+			#detected zip file
+			echo "WARNING: Guessing file type based on extension"
+			if [ -n "$( echo $EXTENSION | grep -i 'o[dt][tps]' )" ]; then
+				echo "Open Office document detected"
+				FILETYPE=$OOo
+			elif [ -n "$( echo $EXTENSION | grep -i 's[dtx][wic]' )" ]; then
+				echo "Open Office document detected"
+				FILETYPE=$OOo	
+			fi
+		fi
+		if [ "$FILETYPE" -ne "0" ]; then
+			return 0
+		else
+			return $FILEDETECTIONFAILED
+		fi
+
+	else
+		return $NOFILE
+	fi
+}
+
+printbmp()
+{
+	BMPOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		convert -page 540x720 "$1" $BMPOUTPUTFILENAME
+		printps $BMPOUTPUTFILENAME
+		rm $BMPOUTPUTFULENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printgif()
+{
+	GIFOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		convert -page 540x720 "$1" $GIFOUTPUTFILENAME
+		printps $GIFOUTPUTFILENAME
+		rm $GIFOUTPUTFULENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printjpeg()
+{
+	JPEGOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		convert -page 540x720 "$1" $JPEGOUTPUTFILENAME
+		printps $JPEGOUTPUTFILENAME
+		rm $JPEGOUTPUTFULENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printmsoffice()
+{
+	if [ -e "$1" ]; then
+		printopenoffice "$1"
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+	exit $UNSUPPORTED
+}
+
+printopenoffice()
+{
+	OOOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.pdf"
+	if [ -e "$1" ]; then
+		ooffice -pt PDFprinter "$1"
+		printpdf $OOOUTPUTFILENAME
+		rm $OOOUTPUTFILENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printpdf()
+{
+	BASE=$( basename "$1" )
+	echo "USEPDF $USEPDF"
+	if [ -e "$1" ]; then
+		if [ $USEPDF -eq $TRUE ]; then
+			PDFPDFOUTPUTFILENAME="/tmp/${BASE//[^[:alnum:]]/_}.pdf"
+			cp "$1" $PDFPDFOUTPUTFILENAME
+			printpdftoserver $PDFPDFOUTPUTFILENAME
+		else
+			PDFPSOUTPUTFILENAME="/tmp/${BASE//[^[:alnum:]]/_}.ps"
+			pdf2ps "$1" $PDFPSOUTPUTFILENAME
+			printpstoserver $PDFPSOUTPUTFILENAME
+			rm $PDFPSOUTPUTFILENAME
+		fi
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printpng()
+{
+	PNGOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		convert -page 540x720 "$1" $PNGOUTPUTFILENAME
+		printps $PNGOUTPUTFILENAME
+		rm $PNGOUTPUTFILENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printps()
+{
+	BASE=$( basename "$1" )
+	if [ -e "$1" ]; then
+		if [ $USEPDF -eq $TRUE ]; then
+			PSPDFOUTPUTFILENAME="/tmp/${BASE//[^[:alnum:]]/_}.pdf"
+			ps2pdf "$1" $PSPDFOUTPUFILENAME
+			printpdftoserver $PSPDFOUTPUTFILENAME
+		else
+			PSPSOUTPUTFILENAME="/tmp/${BASE//[^[:alnum:]]/_}.ps"
+			cp "$1" $PSPSOUTPUTFILENAME
+			printpstoserver $PSPSOUTPUTFILENAME
+			rm $PSPSOUTPUTFILENAME
+		fi
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printtarga()
+{
+	TARGAOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		convert -page 540x720 "$1" $TARGAOUTPUTFILENAME
+		printps $TARGAOUTPUTFILENAME
+		rm $TARGAOUTPUTFULENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printtext()
+{
+	TXTOUTPUTFILENAME="/tmp/${1//[^[:alnum:]]/_}.ps"
+	if [ -e "$1" ]; then
+		enscript -p $TXTOUTPUTFILENAME "$1"
+		printps $TXTOUTPUTFILENAME
+		rm $TXTOUTPUTFILENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+listprinters()
+{
+	clear
+	echo "Select a building:"
+	select BUILDING in "Fisher" "EERC" "MEEM"
+	do
+		clear
+		echo -e "\e[4mPrinter Name\e[m\t\t \e[4mBuilding\e[m\t \e[4mRoom\e[m\t\t \e[4mServer\e[m"
+		if [ "$BUILDING" = "Fisher" ]; then
+			echo -e "color201\t\t Fisher\t\t 201\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser201\t\t Fisher\t\t 201\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser201d\t\t Fisher\t\t 201\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser205\t\t Fisher\t\t 205\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser320\t\t Fisher\t\t 320\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser330\t\t Fisher\t\t 330\t\t galois1.mathlab.mtu.edu"
+			echo -e "laser331\t\t Fisher\t\t 331\t\t galois1.mathlab.mtu.edu"
+		elif [ "$BUILDING" = "EERC" ]; then
+			echo -e "watt\t\t\t EERC\t\t SB28\t\t login.ee.mtu.edu"
+			echo -e "eepscolor\t\t EERC\t\t 121\t\t login.ee.mtu.edu"
+			echo -e "eepscolor-transp\t EERC\t\t 121\t\t login.ee.mtu.edu"
+			echo -e "eeps1\t\t\t EERC\t\t 121\t\t login.ee.mtu.edu"
+			echo -e "eeps1-duplex\t\t EERC\t\t 121\t\t login.ee.mtu.edu"
+			echo -e "ohm\t\t\t EERC\t\t 134\t\t login.ee.mtu.edu"
+			echo -e "ohm-duplex\t\t EERC\t\t 134\t\t login.ee.mtu.edu"
+			echo -e "amp\t\t\t EERC\t\t 722\t\t login.ee.mtu.edu"
+			echo -e "amp-duplex\t\t EERC\t\t 722\t\t login.ee.mtu.edu"
+			echo -e "mho\t\t\t EERC\t\t 723\t\t login.ee.mtu.edu"
+			echo -e "mho-duplex\t\t EERC\t\t 723\t\t login.ee.mtu.edu"
+			echo -e "eeps6\t\t\t EERC\t\t 610\t\t login.ee.mtu.edu"
+			echo -e "eeps6-duplex\t\t EERC\t\t 610\t\t login.ee.mtu.edu"
+			echo -e "wce\t\t\t EERC\t\t 621\t\t login.ee.mtu.edu"
+			echo -e "eeps7\t\t\t EERC\t\t 718\t\t login.ee.mtu.edu"
+			echo -e "eeps7-duplex\t\t EERC\t\t 718\t\t login.ee.mtu.edu"
+			echo -e "volt\t\t\t EERC\t\t 734\t\t login.ee.mtu.edu"
+			echo -e "ztgrad-prt\t\t EERC\t\t 815\t\t login.ee.mtu.edu"
+		elif [ "$BUILDING" = "MEEM" ]; then
+			echo -e "mariner\t\t\t MEEM\t\t 119 - Superior\t login.me.mtu.edu"
+			echo -e "nimue\t\t\t MEEM\t\t 120 - Michigan\t login.me.mtu.edu"
+			echo -e "aurora\t\t\t MEEM\t\t 120 - Michigan\t login.me.mtu.edu"
+			echo -e "poseidon\t\t MEEM\t\t 122 - Erie\t login.me.mtu.edu"
+			echo -e "ariel\t\t\t MEEM\t\t 125 - Ontario\t login.me.mtu.edu"
+			echo -e "triton\t\t\t MEEM\t\t 129 - Huron\t login.me.mtu.edu"
+			echo -e "atlantis\t\t MEEM\t\t 202\t\t login.me.mtu.edu"
+		else
+			exit $NOBUILDING
+		fi
+		break
+	done
+	#	echo -e "redridge\t\t Dillman\t 203\t\t login.cee.mtu.edu"
+	#	echo -e "cooley\t\t\t Dillman\t 211\t\t login.cee.mtu.edu"
+	#	echo -e "Leonardo\t\t Dillman\t 211\t\t login.cee.mtu.edu\t (color)"
+	#	echo -e "civps5\t\t\t Dillman\t 212\t\t login.cee.mtu.edu\t (grad)"
+	#	echo -e "envgrad\t\t\t Dow\t\t 853\t\t login.cee.mtu.edu\t (grad)"
+	#	echo ""
+	#	echo -e "yellowtail\t\t Dillman\t 101\t\t login.cee.mtu.edu (eng fun)"
+	#	echo -e "hoover\t\t\t Dillman\t 208\t\t login.cee.mtu.edu (eng fun)"
+	#	echo -e "nickajack\t\t Dillman\t 209\t\t login.cee.mtu.edu (eng fun)"
+	#	echo ""
+	#	echo -e "benedict\t\t M&M\t\t U202\t\t login.bio.mtu.edu (biomed)"
+	#	echo -e "michelangelo\t\t M&M\t\t U209\t\t login.bio.mtu.edu (biomed)\t (color)"
+	#	echo -e "metalps\t\t\t M&M\t\t 417A\t\t login.bio.mtu.edu (MSE)\t (grad)"
+	echo "Desired printer:"
+	read -a temp
+	PRINTERNAME=(${temp[0]})
+	echo $PRINTERNAME
+	if [ "$PRINTERNAME" = "color201" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser201" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser201d" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser205" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser320" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser330" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "laser331" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="galois1.mathlab.mtu.edu"
+	elif [ "$PRINTERNAME" = "ohm" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "ohm-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "amp" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "amp-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "mho" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "mho-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps7" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps7-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "wce" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps6" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps6-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps1" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eeps1-duplex" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eepscolor" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "eepscolor-transp" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "ztgrad-prt" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "watt" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "volt" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.ee.mtu.edu"
+	elif [ "$PRINTERNAME" = "mariner" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "nimue" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "aurora" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "poseidon" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "ariel" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "triton" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	elif [ "$PRINTERNAME" = "atlantis" ]; then
+		REMOTEUSER="mphansen"
+		SERVER="login.me.mtu.edu"
+	else
+		echo "ERROR: Invalid printer selection!"
+		exit $INVALIDPRINTER
+	fi
+	echo "Remoteuser: " $REMOTEUSER
+	echo "Server: " $SERVER
+}
+
+findpdf2ps()
+{
+	if [ -z "$( ssh $REMOTEUSER@$SERVER 'which pdf2ps' | grep not )" ]; then
+		USEPDF=$TRUE
+		echo "pdf2ps found on remote machine"
+	else 
+		USEPDF=$FALSE
+		echo "pdf2ps not found on remote machine"
+	fi
+}
+
+printpdftoserver()
+{
+	REMOTEFILENAME=$( basename "$1" )
+	echo "1: $1"
+	echo "REMOTEFILENAME: $REMOTEFILENAME"
+	echo "REMOTEUSER: $REMOTEUSER"
+	echo "SERVER: $SERVER"
+	if [ -e "$1" ]; then
+		scp -C "$1" $REMOTEUSER@$SERVER:~/
+		ssh $REMOTEUSER@$SERVER pdf2ps '~/'$REMOTEFILENAME '~/'$REMOTEFILENAME.ps
+		printonpaper "$REMOTEFILENAME.ps"
+		ssh $REMOTEUSER@$SERVER rm '~/'$REMOTEFILENAME.ps
+		ssh $REMOTEUSER@$SERVER rm '~/'$REMOTEFILENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi
+}
+
+printpstoserver()
+{
+	REMOTEFILENAME=$( basename "$1" )
+	if [ -e "$1" ]; then
+		scp -C "$1" $REMOTEUSER@$SERVER:~/
+		printonpaper $REMOTEFILENAME
+		ssh $REMOTEUSER@$SERVER rm '~/'$REMOTEFILENAME
+	else
+		echo "ERROR: File $1 not found!"
+		exit $NOFILE
+	fi									  
+}
+
+printonpaper()
+{
+	echo "Printing $1..."
+	ssh $REMOTEUSER@$SERVER lpr -P $PRINTERNAME '~/'$1
+}
+
+if [ $# -ge 1 ]; then
+	until [ -z "$1" ]; do
+		main "$1"
+		shift
+	done
+else
+	echo "USAGE: $0 file1 file2 ..."
+	exit $NOPARAMETERS
+fi

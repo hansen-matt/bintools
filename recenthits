@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	grep -v 192.168.1.1 /var/log/apache2/access_log | tail
+else
+	grep -v 192.168.1.1 /var/log/apache2/access_log | tail -n$1
+fi

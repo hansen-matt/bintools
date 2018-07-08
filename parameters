@@ -1,0 +1,11 @@
+#!/bin/bash
+SCRIPTNAME=`basename $0`
+FILE="$HOME/.$SCRIPTNAME"
+ME="$PWD/$SCRIPTNAME"
+
+if [ $# -ne 0 ]; then
+	echo "#\\bin\\bash"
+	echo "$ME $*"
+else
+	echo "ZERO"
+fi

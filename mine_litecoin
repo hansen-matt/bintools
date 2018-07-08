@@ -1,0 +1,2 @@
+#/bin/bash
+cgminer --scrypt -o stratum+tcp://america.mine-litecoin.com -u confuted.alpha -p x -I 13

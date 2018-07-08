@@ -1,0 +1,2 @@
+#!/bin/bash
+grep -v favicon.ico /var/log/apache2/access_log | tail -n 1 | gawk '{print $1}'

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#select vegetable in "beans" "carrots" "potatoes" "onions" "rutabagas"
+#do
+#	echo $vegetable
+#	break
+#done
+REMOTEUSER="mphansen"
+SERVER="vector0.mathlab.mtu.edu"
+if [ -z "$( ssh $REMOTEUSER@$SERVER 'which pdf2ps' | grep not )" ]; then
+	USEPDF=1
+	echo "found pdf2ps"
+else 
+	USEPDF=0
+	echo "pdf2ps not found!"
+fi

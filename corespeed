@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ $# -ne 1 ]; then
+	echo "usage: $0 #"
+	echo "Where # is the index of the desired core (count starts at 1)"
+else
+	grep --max-count=$1 -i 'mhz' /proc/cpuinfo | tail -n 1 | gawk '{print $4}' | gawk -F '.' '{print $1}'
+fi

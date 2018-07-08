@@ -1,0 +1,9 @@
+#!/bin/bash
+SCRIPTNAME=`basename $0`
+if [ $# -ne 0 ]; then
+	find "$PWD" -iname '*.mp3' -or -iname '*.ogg'  >> "$@"
+else
+	echo "$SCRIPTNAME appends all mp3 or ogg files in the working directory to the specified playlist"
+	echo "Usage: $SCRIPTNAME playlistname.m3u"
+	exit 0
+fi

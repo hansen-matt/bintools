@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -ne 0 ]; then
+	scp $@ mphansen@login.me.mtu.edu:~/scp/
+else
+	echo "Usage: $SCRIPTNAME <file>"
+	exit 1;
+fi
+
