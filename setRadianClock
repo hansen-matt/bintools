@@ -1,0 +1,5 @@
+#!/bin/bash
+stty -crtscts -hup 9600 < /dev/ttyUSB0
+echo $(date +S%H%M%S) > /dev/ttyUSB0
+#echo "" > /dev/ttyUSB0
+#echo "a000000" > /dev/ttyUSB0

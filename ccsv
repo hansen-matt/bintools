@@ -1,0 +1,63 @@
+#!/usr/bin/perl
+
+#$/="";
+use Cwd;
+$fileextension=".csv";
+$fileprefix="test";
+$directory=getcwd;
+
+chomp(@filelisting = `ls -1v $directory/$fileprefix*$fileextension`);
+
+$file = $filelisting[0];
+$i=0;
+open(FILE,$file);
+foreach $line (<FILE>)
+{
+	chomp($line);
+	@elements=split(/,/,"$line");
+	chomp(@elements);
+	$elements[0]=~s/\x0D//g;
+	$combined[$i]=$elements[0];
+	$i++;
+}
+close(FILE);
+
+
+foreach $file (@filelisting)
+{
+	$i=0;
+	open(FILE,$file);
+	foreach $line (<FILE>)
+	{
+		chomp($line);
+		@elements=split(/,/,"$line");
+		chomp(@elements);
+		$elements[1]=~s/\x0D//g;
+		$combined[$i]="$combined[$i], $elements[1]";
+		$i++;
+	}
+	close FILE;
+}
+
+foreach $line (@combined)
+{
+	print "$line\n";
+}
+
+
+# i=0;
+# foreach line in firstfile
+# 	i++
+# 	read line
+# 	parse x values out of line
+# 	combined(i)=x
+# 	
+# foreach file
+# i=0
+# 	foreach line
+# 		i++
+# 		read line
+# 		parse line
+# 		combined(i)
+
+

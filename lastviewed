@@ -1,0 +1,19 @@
+#!/bin/bash
+#grep -v favicon.ico /var/log/apache2/access_log | tail -n 1 | gawk '{print $7}'
+grep -v favicon.ico /var/log/apache2/access_log | tail -n 1 | gawk '{print $7}' | sed s/%20/\ /g |
+gawk -F"/" '{
+	max=52;
+	if (length() > max ) 
+	{
+		len=length($NF);
+		if (len < max)
+			print substr($0,0,max-len) ".../" $NF
+		else
+			print "..." substr($NF, max-len, max)
+
+	}
+	else
+		print; 
+}'
+
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Converting "$1" to postscript, landscape, 4 columns, 16 point times new roman"
+enscript -4 -r -B --word-wrap -f Times-Roman@16 -p "$1".ps "$1"
+echo "Converting to "$1".ps to PDF"
+ps2pdf "$1".ps "$1".pdf
+echo "Deleting "$1".ps"
+rm "$1".ps

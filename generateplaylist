@@ -1,0 +1,9 @@
+#!/bin/bash
+SCRIPTNAME=`basename $0`
+if [ $# -ne 0 ]; then
+	find $PWD -iname '*.mp3' -or -iname '*.ogg' > $1
+else
+	echo "$SCRIPTNAME generates m3u playlists of all mp3 and ogg files in the working directory."
+	echo "Usage: $SCRIPTNAME playlistname.m3u"
+	exit 0
+fi

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+OUTPUTFILENAME="/tmp/th1s15atest_ps"
+BASE=$( basename "$OUTPUTFILENAME" )
+FINAL="${BASE//[[:punct:]]}"
+
+echo $OUTPUTFILENAME
+echo $BASE
+echo $FINAL

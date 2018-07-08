@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 0 ]; then
+	#A set of parameters was passed to the script.
+	#Save them for next time in a script at ~/.$SCRIPTNAME
+	ssh -X mphansen@$1.me.mtu.edu
+else
+	ssh mphansen@login.me.mtu.edu
+#	ssh -X mphansen@login.me.mtu.edu
+fi
+
