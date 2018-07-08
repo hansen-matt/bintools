@@ -1,0 +1,26 @@
+#!/bin/bash
+dirty=0
+if [[ $(git diff --stat) != '' ]]; then
+  dirty=1
+fi
+
+echo -n "Clang..."
+find . \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
+echo -n "BANG!"
+
+if [[ $(git diff --stat) == '' ]]; then
+  echo " made no changes to versioned files."
+elif [[ $dirty -eq 0 ]]; then
+  echo ""
+  # Clang bang changes can be committed automatically
+  read -n 1 -r -p "Automatically add and commit clang-bang changes (Y/n)?" choice
+  if [[ $choice =~ ^(y|Y| ) ]] || [[ -z $choice ]]; then
+    echo ""
+    echo "Committing clang-bang changes"
+    git commit -a -m "Clang-bang commit"
+  fi
+else
+  echo ""
+  echo "Git reports that working copy is DIRTY. Commit changes manually."
+fi
+

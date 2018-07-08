@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 /home/matt/git/phalanx-picozed/tools/SSBL/update.py /home/matt/git/phalanx-picozed/Xilinx/SDK/alpha_live.sdk/BOOT-engineering.bin
