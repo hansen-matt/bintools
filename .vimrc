@@ -4,14 +4,30 @@ set nocompatible
 map <F6> :set hlsearch!<CR>
 imap <F6> <ESC>:set hlsearch!<CR>a
 
-map <F7> :set syntax=c<CR>
-imap <F7> <ESC>:set syntax=c<CR>a
+"map <F7> :set syntax=c<CR>
+"imap <F7> <ESC>:set syntax=c<CR>a
+
+map <F7> :syntax reset<CR>
+imap <F7> <ESC>:syntax reset<CR>a
 
 set pastetoggle=<F2>
 
 map <F3> :cp<CR> 
 map <F4> :cn<CR> 
+map <F12> :colorscheme github<CR>
+imap <F12> <ESC>:colorscheme github<CR>a
 
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Diff resolution
+map <C-,> :diffget LOCAL<CR>
+map <C-.> :diffget REMOTE<CR>
+imap <C-,> <ESC>:diffget LOCAL<CR>a
+imap <C-.> <ESC>:diffget REMOTE<CR>a
 
 " Enable 'in-column' up and down motion in INSERT mode on wrapped lines
 imap <silent> <Up>   <C-o>gk
@@ -80,19 +96,23 @@ set linebreak
 set so=3
 set nospell
 set nofoldenable 
-set foldmethod=syntax
+set foldmethod=indent
+autocmd FileType c,cpp :set foldmethod=syntax
 set foldlevel=0
 set foldlevelstart=0
 set foldnestmax=6
 set expandtab
+set termguicolors
 
+set tags+=./.git/tags;.
+let g:ctags_statusline=1
+let generate_tags=1
 "save/load fold state
 "au BufWinLeave * mkview
 "au BufWinEnter * silent loadview
 
 set autoindent
 
-colorscheme elflord
 
 "" Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -127,3 +147,4 @@ else
 endif " has("autocmd")
 
 
+"set colorscheme=parsec
