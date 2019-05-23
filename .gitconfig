@@ -1,0 +1,33 @@
+[user]
+	email = matt.hansen@luminartech.com
+	name = Matt Hansen
+[rebase]
+  #autosquash = true
+  instructionFormat = [%an] %s
+[format]
+	pretty = format:%C(auto)%h %>(16)%C(green)%aN %C(blue)%>(14)%ar %Creset%s %C(bold yellow)%d%C(reset)
+[diff]
+  tool = meld
+[difftool]
+  prompt = false
+[difftool "meld"]
+  cmd = meld "$LOCAL" "$REMOTE"
+[merge]
+#  tool = meld
+[mergetool "meld"]
+#  cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+[init]
+	templatedir = /home/matt/.git_template
+[alias]
+	ctags = !.git/hooks/ctags
+[credential]
+	helper = cache
+[pull]
+  rebase = interactive
+[push]
+	default = current
+[branch]
+#  autosetuprebase = always
+#	autosetupmerge = always
+[submodule]
+#	recurse = true
