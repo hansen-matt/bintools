@@ -1,4 +1,3 @@
 #!/bin/bash
-cd /home/matt/git/phalanx-picozed
-/opt/Xilinx/Vivado/2017.3/bin/vivado -mode batch -source ./Xilinx/scripts/alpha_live_build_vivado.tcl -tclargs buildall
-
+echo "ERROR: need to run"
+echo "source [getws]/../../scripts/alpha_live_build_sdk.tcl"

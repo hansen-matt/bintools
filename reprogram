@@ -5,8 +5,8 @@ then
   read -n 1 -r -p "BOOT-engineering.bin is old. Continue programming (Y/n)?" choice
   if [[ $choice =~ ^(y|Y| ) ]] || [[ -z $choice ]]; then
     echo ""
-    python3 /home/matt/git/phalanx-picozed/tools/SSBL/update.py $file 10.42.0.254
+    python3 /home/matt/git/phalanx-picozed/tools/SSBL/update.py $file 10.42.0.253
   fi
 else
-  python3 /home/matt/git/phalanx-picozed/tools/SSBL/update.py $file 10.42.0.254
+  python3 /home/matt/git/phalanx-picozed/tools/SSBL/update.py $file 10.42.0.253
 fi
