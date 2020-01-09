@@ -27,7 +27,7 @@ shopt -s checkwinsize
 shopt -s promptvars
 
 # vim mode
-set -o vi
+#set -o vi
 
 # ls after cd
 function cd {
@@ -37,7 +37,7 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=$PATH:/usr/local/MATLAB/R2018a/bin:/opt/Xilinx/SDK/2017.3/bin:/opt/Xilinx/Vivado/2017.3/bin:~/bin:~/codesonar/codesonar-4.5p2/bin:~/klocwork/client_19.0/bin
+export PATH=/usr/local/MATLAB/R2018a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$PATH
 export ENVISION_DEPS=/home/matt/git/envision/Envision_depends
 mkdir -p "/home/matt/.vim/undo"
 mkdir -p "/home/matt/.vim/backup"
@@ -138,6 +138,10 @@ if [ -x /usr/bin/dircolors ]; then
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
 fi
+
+alias con="git rebase --continue"
+alias mt="git mergetool"
+alias ab="git rebase --abort"
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

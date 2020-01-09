@@ -4,6 +4,8 @@ set nocompatible
 map <F6> :set hlsearch!<CR>
 imap <F6> <ESC>:set hlsearch!<CR>a
 
+map <F2> :!ctags -R .<CR>
+
 "map <F7> :set syntax=c<CR>
 "imap <F7> <ESC>:set syntax=c<CR>a
 
@@ -29,6 +31,11 @@ map <C-.> :diffget REMOTE<CR>
 imap <C-,> <ESC>:diffget LOCAL<CR>a
 imap <C-.> <ESC>:diffget REMOTE<CR>a
 
+" temporary
+nnoremap <silent> ,p 0i[PRF] <ESC>
+nnoremap <silent> ,r 0i[RW] <ESC>
+nnoremap <silent> ,m 0i[MATLAB] <ESC>
+
 " Enable 'in-column' up and down motion in INSERT mode on wrapped lines
 imap <silent> <Up>   <C-o>gk
 imap <silent> <Down> <C-o>gj
@@ -38,6 +45,7 @@ map <silent> <Up>   gk
 map <silent> <Down> gj
 
 syntax on
+highlight Folded ctermbg=Black ctermfg=Gray
 
 " make the window title reflect the file being edited
 set title
@@ -82,6 +90,7 @@ set nohlsearch
 " Detect files that have changed
 set autoread
 au FocusGained,BufEnter * :checktime
+au CursorHold,CursorHoldI * checktime
 
 set showcmd		" display incomplete commands
 set comments=n:#,:%,fb:-,n:>nn:)
@@ -102,7 +111,7 @@ set foldlevel=0
 set foldlevelstart=0
 set foldnestmax=6
 set expandtab
-set termguicolors
+"#set termguicolors
 
 set tags+=./.git/tags;.
 let g:ctags_statusline=1
