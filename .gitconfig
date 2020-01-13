@@ -17,9 +17,10 @@
 [mergetool "meld"]
 #  cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [init]
-	templatedir = /home/matt/.git_template
+	templatedir = ~/.git_template
 [alias]
 	ctags = !.git/hooks/ctags
+	lastused = for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname:short)'
 [credential]
 	helper = cache
 [pull]
@@ -27,7 +28,13 @@
 [push]
 	default = current
 [branch]
-#  autosetuprebase = always
+  autosetuprebase = always
 #	autosetupmerge = always
 [submodule]
 #	recurse = true
+[cola]
+	spellcheck = false
+[merge]
+	tool = vimdiff3
+[mergetool "vimdiff3"]
+  cmd = vim -f -d \"$MERGED\" \"$LOCAL\" \"$REMOTE\"
