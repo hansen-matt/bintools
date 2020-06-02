@@ -113,8 +113,11 @@ set foldlevelstart=0
 set foldnestmax=6
 set expandtab
 "#set termguicolors
+set autochdir
 
-set tags+=./.git/tags;.
+"set tags=tags;
+set tags^=.git/tags;~,./tags,tags
+"set tags+=./.git/tags;.
 let g:ctags_statusline=1
 let generate_tags=1
 "save/load fold state
