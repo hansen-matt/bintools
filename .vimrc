@@ -16,6 +16,7 @@ set pastetoggle=<F2>
 
 map <F3> :cp<CR> 
 map <F4> :cn<CR> 
+nnoremap <F9>  :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 map <F12> :colorscheme github<CR>
 imap <F12> <ESC>:colorscheme github<CR>a
 
