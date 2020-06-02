@@ -126,6 +126,8 @@ let generate_tags=1
 
 set autoindent
 
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+
 
 "" Only do this part when compiled with support for autocommands.
 if has("autocmd")
