@@ -161,5 +161,13 @@ else
 
 endif " has("autocmd")
 
+augroup filetypedetect
+  au BufRead,BufNewFile *.cl set filetype=c
+augroup END
+
+augroup filetypedetect
+  au BufRead,BufNewFile *.asm set filetype=hydra_asm
+augroup END
+
 
 "set colorscheme=parsec
