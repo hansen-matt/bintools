@@ -58,8 +58,8 @@ set history=500		" keep 500 lines of command line history
 set ruler		" show the cursor position all the time
 
 " 3 characters for tabs
-set tabstop=2
-set shiftwidth=2
+set tabstop=3
+set shiftwidth=3
 
 " backspace should delete
 set backspace=2
