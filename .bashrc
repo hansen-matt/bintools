@@ -144,12 +144,20 @@ alias mt="git mergetool"
 alias ab="git rebase --abort"
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias gm='git mergetool'
+alias grc='git rebase --continue'
+
+alias common='cd ~/git/iris_firmware/common'
+alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
+alias system='cd ~/git/iris_firmware/system_v70/firmware/src/luminar'
+alias autosar='cd ~/git/iris_firmware/source_iris_autosar_common'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -187,3 +195,8 @@ if [ ! -z "$SET_TITLE" ]; then
   set-title $SET_TITLE;
   export SET_TITLE=;
 fi
+
+# hydra tools
+export HYDRA_TOOLS_PATH=/home/matt/git/iris_firmware/hydra/tools
+source /home/matt/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
+export PATH="$PATH:"/opt/microchip/xc32/v2.30/bin""

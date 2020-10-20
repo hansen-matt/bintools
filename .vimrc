@@ -116,7 +116,7 @@ set expandtab
 set autochdir
 
 "set tags=tags;
-set tags^=.git/tags;~,./tags,tags
+set tags^=tags;
 "set tags+=./.git/tags;.
 let g:ctags_statusline=1
 let generate_tags=1
