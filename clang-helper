@@ -1,5 +1,6 @@
 #!/bin/bash
 echo -n "Clang..."
-find Xilinx/SDK/alpha_live.sdk \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
+find laser_v70/firmware/ \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
+find common/ \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
 #find . \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
 echo -n "BANG!"
