@@ -153,6 +153,8 @@ alias gm='git mergetool'
 alias gra="git rebase --abort"
 alias grc='git rebase --continue'
 alias gs='git status'
+alias ga='git add'
+alias gp='git push'
 
 alias common='cd ~/git/iris_firmware/common'
 alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
