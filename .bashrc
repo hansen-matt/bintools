@@ -139,10 +139,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-alias con="git rebase --continue"
-alias mt="git mergetool"
-alias ab="git rebase --abort"
-alias gcm="git commit -m"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -152,8 +148,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias gcm="git commit -m"
 alias gm='git mergetool'
+alias gra="git rebase --abort"
 alias grc='git rebase --continue'
+alias gs='git status'
 
 alias common='cd ~/git/iris_firmware/common'
 alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
