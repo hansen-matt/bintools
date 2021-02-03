@@ -12,6 +12,9 @@ map <F2> :!ctags -R .<CR>
 map <F7> :syntax reset<CR>
 imap <F7> <ESC>:syntax reset<CR>a
 
+" delete trailing whitespace
+map <F5> :%s/\s\+$//g<CR>
+imap <F5> <ESC>:%s/\s\+$//g<CR>a
 set pastetoggle=<F2>
 
 map <F3> :cp<CR> 
@@ -104,7 +107,7 @@ set showmode
 set nostartofline
 set linebreak
 set so=3
-set nospell
+"set nospell
 set nofoldenable 
 set foldmethod=indent
 autocmd FileType c,cpp :set foldmethod=syntax
@@ -114,6 +117,7 @@ set foldnestmax=6
 set expandtab
 "#set termguicolors
 set autochdir
+set nowrap
 
 "set tags=tags;
 set tags^=tags;
@@ -128,6 +132,8 @@ set autoindent
 
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 
+" Highlight trailing whitespace
+autocmd Filetype c,cpp match Error /\s\+$/
 
 "" Only do this part when compiled with support for autocommands.
 if has("autocmd")
