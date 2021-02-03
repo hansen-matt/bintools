@@ -149,6 +149,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias gcm="git commit -m"
+alias gcma="git commit -a -m"
 alias gm='git mergetool'
 alias gra="git rebase --abort"
 alias grc='git rebase --continue'
