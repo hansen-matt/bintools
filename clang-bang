@@ -5,7 +5,7 @@ if [[ $(git diff --stat) != '' ]]; then
 fi
 
 echo -n "Clang..."
-find . \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*tools/*' -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
+find . \( -iname \*.c -o -iname \*.h -o -iname \*.cpp -o -iname \*.cl \) -not -path '*tools/*' -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-5.0 -style=file -i
 echo -n "BANG!"
 
 if [[ $(git diff --stat) == '' ]]; then
