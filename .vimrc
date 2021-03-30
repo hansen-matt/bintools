@@ -60,9 +60,10 @@ set laststatus=2
 set history=500		" keep 500 lines of command line history
 set ruler		" show the cursor position all the time
 
-" 3 characters for tabs
-set tabstop=3
-set shiftwidth=3
+" 4 characters for tabs, use spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 " backspace should delete
 set backspace=2
@@ -75,7 +76,7 @@ set writebackup
 " Set swap directory
 set directory=/home/matt/.vim/swap//,/tmp
 
-" Save undu history
+" Save undo history
 set undofile
 set undodir=/home/matt/.vim/undo//,/tmp
 set undolevels=1000
@@ -114,7 +115,6 @@ autocmd FileType c,cpp :set foldmethod=syntax
 set foldlevel=0
 set foldlevelstart=0
 set foldnestmax=6
-set expandtab
 "#set termguicolors
 set autochdir
 set nowrap
@@ -134,6 +134,9 @@ cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W')
 
 " Highlight trailing whitespace
 autocmd Filetype c,cpp match Error /\s\+$/
+
+" Don't expand tabs in makefiles
+autocmd FileType make setlocal noexpandtab
 
 "" Only do this part when compiled with support for autocommands.
 if has("autocmd")
