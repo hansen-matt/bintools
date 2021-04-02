@@ -157,11 +157,14 @@ alias gs='git status'
 alias ga='git add'
 alias gp='git push'
 alias gd='git diff'
+alias gsu='git submodule update --recursive"
 
 alias common='cd ~/git/iris_firmware/common'
 alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
 alias system='cd ~/git/iris_firmware/system_v70/firmware/src/luminar'
 alias autosar='cd ~/git/iris_firmware/source_iris_autosar_common'
+alias pr='cd ~/git/iris_firmware/hydra/pp/applications/datapath_pr'
+alias vis='cd ~/git/iris_firmware/tools/scripts/'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
