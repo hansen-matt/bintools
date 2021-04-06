@@ -109,11 +109,11 @@ set nostartofline
 set linebreak
 set so=3
 "set nospell
-set nofoldenable 
+set foldenable
 set foldmethod=indent
 autocmd FileType c,cpp :set foldmethod=syntax
 set foldlevel=0
-set foldlevelstart=0
+set foldlevelstart=3
 set foldnestmax=6
 "#set termguicolors
 set autochdir
@@ -177,6 +177,5 @@ augroup END
 augroup filetypedetect
   au BufRead,BufNewFile *.asm set filetype=hydra_asm
 augroup END
-
 
 "set colorscheme=parsec
