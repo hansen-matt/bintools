@@ -132,8 +132,11 @@ set autoindent
 
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 
+" Filetype for markdown
+au BufNewFile,BufRead *.md set ft=markdown
+
 " Highlight trailing whitespace
-autocmd Filetype c,cpp match Error /\s\+$/
+autocmd Filetype c,cpp,markdown match Error /\s\+$/
 
 " Don't expand tabs in makefiles
 autocmd FileType make setlocal noexpandtab
