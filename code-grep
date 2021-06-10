@@ -1,2 +1,2 @@
 #!/bin/bash
-grep --color=auto -R -I --include "*.c" --include "*.cpp" --include "*.cl" --include "*.hpp" --include "*.h" --include "*.asm" --exclude "*Vtt*" --exclude-dir "*bsp*" --exclude-dir "*Vtt*" --exclude-dir "third_party" "$@"
+grep --color=auto -R -I --include "*.c" --include "*.cpp" --include "*.cl" --include "*.hpp" --include "*.h" --include "*.asm" --exclude "*Vtt*" --exclude-dir "*bsp*" --exclude-dir "*Vtt*" --exclude-dir "third_party" --exclude-dir "obj" "$@"
