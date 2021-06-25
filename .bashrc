@@ -211,4 +211,5 @@ fi
 # hydra tools
 export HYDRA_TOOLS_PATH=/home/matt/git/iris_firmware/hydra/tools
 source /home/matt/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
-export PATH="$PATH:"/opt/microchip/xc32/v2.30/bin""
+export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
+export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1
