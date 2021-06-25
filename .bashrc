@@ -37,7 +37,7 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/usr/local/MATLAB/R2018a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:/home/matt/git/iris_firmware/tools/PCAP_to_CSV/build:/home/matt/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$PATH
+export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:/home/matt/git/iris_firmware/tools/PCAP_to_CSV/build:/home/matt/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$PATH
 export ENVISION_DEPS=/home/matt/git/envision/Envision_depends
 export HISTTIMEFORMAT="%m/%d/%y %T "
 export MLM_LICENSE_FILE=27000@10.0.7.22
