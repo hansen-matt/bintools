@@ -37,8 +37,10 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/usr/local/MATLAB/R2018a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$PATH
+export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:/home/matt/git/iris_firmware/tools/PCAP_to_CSV/build:/home/matt/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$PATH
 export ENVISION_DEPS=/home/matt/git/envision/Envision_depends
+export HISTTIMEFORMAT="%m/%d/%y %T "
+export MLM_LICENSE_FILE=27000@10.0.7.22
 mkdir -p "/home/matt/.vim/undo"
 mkdir -p "/home/matt/.vim/backup"
 mkdir -p "/home/matt/.vim/swap"
@@ -139,17 +141,36 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-alias con="git rebase --continue"
-alias mt="git mergetool"
-alias ab="git rebase --abort"
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias gco="git checkout"
+alias gcm="git commit -m"
+alias gcma="git commit -a -m"
+alias gm='git mergetool'
+alias gra="git rebase --abort"
+alias grc='git rebase --continue'
+alias gs='git status'
+alias ga='git add'
+alias gp='git push'
+alias gd='git diff'
+alias gl='git log'
+alias gf='git fetch'
+alias gsu='git submodule update --recursive'
+
+alias common='cd ~/git/iris_firmware/common'
+alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
+alias system='cd ~/git/iris_firmware/system_v70/firmware/src/luminar'
+alias autosar='cd ~/git/iris_firmware/source_iris_autosar_common'
+alias pr='cd ~/git/iris_firmware/hydra/pp/applications/datapath_pr'
+alias pl='cd ~/git/iris_firmware/tools/plot_CSV_from_PCAP/python'
+alias vis='cd ~/git/iris_firmware/tools/scripts/'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -187,3 +208,9 @@ if [ ! -z "$SET_TITLE" ]; then
   set-title $SET_TITLE;
   export SET_TITLE=;
 fi
+
+# hydra tools
+export HYDRA_TOOLS_PATH=/home/matt/git/iris_firmware/hydra/tools
+source /home/matt/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
+export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
+export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1

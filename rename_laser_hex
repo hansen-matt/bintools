@@ -1,0 +1,5 @@
+#!/bin/bash
+cd ~/git/iris_firmware
+HASH=$(git rev-parse --short HEAD)
+dir=~/git/iris_firmware/laser_v70/firmware/LaserBoard.X/dist/default/production
+mv $dir/LaserBoard.X.production.hex $dir/LaserBoard.X.production.$HASH.hex
