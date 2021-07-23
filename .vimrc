@@ -12,10 +12,14 @@ map <F2> :!ctags -R .<CR>
 map <F7> :syntax reset<CR>
 imap <F7> <ESC>:syntax reset<CR>a
 
+" delete trailing whitespace
+map <F5> :%s/\s\+$//g<CR>
+imap <F5> <ESC>:%s/\s\+$//g<CR>a
 set pastetoggle=<F2>
 
 map <F3> :cp<CR> 
 map <F4> :cn<CR> 
+nnoremap <F9>  :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 map <F12> :colorscheme github<CR>
 imap <F12> <ESC>:colorscheme github<CR>a
 
@@ -56,9 +60,10 @@ set laststatus=2
 set history=500		" keep 500 lines of command line history
 set ruler		" show the cursor position all the time
 
-" 3 characters for tabs
-set tabstop=2
-set shiftwidth=2
+" 4 characters for tabs, use spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 " backspace should delete
 set backspace=2
@@ -71,7 +76,7 @@ set writebackup
 " Set swap directory
 set directory=/home/matt/.vim/swap//,/tmp
 
-" Save undu history
+" Save undo history
 set undofile
 set undodir=/home/matt/.vim/undo//,/tmp
 set undolevels=1000
@@ -103,17 +108,20 @@ set showmode
 set nostartofline
 set linebreak
 set so=3
-set nospell
-set nofoldenable 
+"set nospell
+set foldenable
 set foldmethod=indent
 autocmd FileType c,cpp :set foldmethod=syntax
 set foldlevel=0
-set foldlevelstart=0
+set foldlevelstart=3
 set foldnestmax=6
-set expandtab
 "#set termguicolors
+set autochdir
+set nowrap
 
-set tags+=./.git/tags;.
+"set tags=tags;
+set tags^=tags;
+"set tags+=./.git/tags;.
 let g:ctags_statusline=1
 let generate_tags=1
 "save/load fold state
@@ -122,6 +130,16 @@ let generate_tags=1
 
 set autoindent
 
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+
+" Filetype for markdown
+au BufNewFile,BufRead *.md set ft=markdown
+
+" Highlight trailing whitespace
+autocmd Filetype c,cpp,markdown match Error /\s\+$/
+
+" Don't expand tabs in makefiles
+autocmd FileType make setlocal noexpandtab
 
 "" Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -155,5 +173,12 @@ else
 
 endif " has("autocmd")
 
+augroup filetypedetect
+  au BufRead,BufNewFile *.cl set filetype=c
+augroup END
+
+augroup filetypedetect
+  au BufRead,BufNewFile *.asm set filetype=hydra_asm
+augroup END
 
 "set colorscheme=parsec

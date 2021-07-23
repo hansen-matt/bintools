@@ -1,0 +1,2 @@
+#!/bin/bash
+systemctl start openvpn@mco1-mhansen-desktop-vpn

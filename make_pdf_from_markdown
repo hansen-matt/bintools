@@ -1,0 +1,11 @@
+#!/bin/bash
+rm -rf pdf_output*
+mkdir -p pdf_output
+find . -iname '*.md' -print0 | while read -d $'\0' file
+do
+  echo "Processing $file"
+  mkdir -p pdf_output/$(dirname $file)
+  pandoc -o "$(dirname ./pdf_output/$file.pdf)/$(basename $file).pdf" -f markdown -t latex $file
+done
+echo "Creating tar file"
+tar -cvzf pdf_output.tar.gz pdf_output
