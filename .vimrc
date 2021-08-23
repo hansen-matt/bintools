@@ -118,6 +118,7 @@ set foldnestmax=6
 "#set termguicolors
 set autochdir
 set nowrap
+set scrollopt+=hor
 
 "set tags=tags;
 set tags^=tags;
