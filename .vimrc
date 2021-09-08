@@ -49,7 +49,22 @@ map <silent> <Up>   gk
 map <silent> <Down> gj
 
 syntax on
-highlight Folded ctermbg=Black ctermfg=Gray
+
+" Cursor highlighting
+set cursorline
+
+" Folding
+highlight Folded ctermbg=234 ctermfg=Gray
+
+" Cursor
+highlight CursorLine cterm=NONE ctermbg=234
+
+" highlight active status line
+highlight statusline ctermbg=22 ctermfg=16 cterm=NONE
+highlight statuslinenc ctermbg=237 ctermfg=7 cterm=NONE
+
+" split divide
+highlight vertsplit ctermbg=237 ctermfg=237 cterm=NONE
 
 " make the window title reflect the file being edited
 set title
@@ -181,5 +196,12 @@ augroup END
 augroup filetypedetect
   au BufRead,BufNewFile *.asm set filetype=hydra_asm
 augroup END
+
+" hide cursorline in non-active windows
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END  
 
 "set colorscheme=parsec
