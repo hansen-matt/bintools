@@ -2,5 +2,5 @@
 if [ "$#" -ne 1 ]; then
   echo "Usage: $0 <SHA_START>..HEAD"
 else
-  git filter-branch -f --prune-empty --tree-filter 'clang-helper' "$@"
+  FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --prune-empty --tree-filter 'clang-helper' "$@"
 fi
