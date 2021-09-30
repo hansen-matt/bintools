@@ -1,0 +1,2 @@
+#!/bin/bash
+find . \( -iname \*.h -o -iname \*.c -o -iname \*.cpp \) -exec sh -c 'cat COPYRIGHT $0 > /tmp/copyright ; mv /tmp/copyright $0' {} \;
