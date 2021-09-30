@@ -37,13 +37,13 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:/home/matt/git/iris_firmware/tools/PCAP_to_CSV/build:/home/matt/git/iris_firmware/tools/plot_CSV_from_PCAP/python:/home/matt/git/iris_firmware/tools/scripts/:$PATH
-export ENVISION_DEPS=/home/matt/git/envision/Envision_depends
+export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:$PATH
+export ENVISION_DEPS=$HOME/git/envision/Envision_depends
 export HISTTIMEFORMAT="%m/%d/%y %T "
 export MLM_LICENSE_FILE=27000@10.0.7.22
-mkdir -p "/home/matt/.vim/undo"
-mkdir -p "/home/matt/.vim/backup"
-mkdir -p "/home/matt/.vim/swap"
+mkdir -p "$HOME/.vim/undo"
+mkdir -p "$HOME/.vim/backup"
+mkdir -p "$HOME/.vim/swap"
 
 
 eval $(thefuck --alias)
@@ -210,7 +210,7 @@ if [ ! -z "$SET_TITLE" ]; then
 fi
 
 # hydra tools
-export HYDRA_TOOLS_PATH=/home/matt/git/iris_firmware/hydra/tools
-source /home/matt/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
+export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
+source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
 export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
 export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1
