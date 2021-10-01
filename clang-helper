@@ -1,7 +1,9 @@
 #!/bin/bash
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 path_to_format"
+  echo "This script is meant to be invoked from clang-rewrite-history"
+  exit -1
+fi
 echo -n "Clang..."
-#find laser_v70/firmware/ \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-6.0 -style=file -i
-#find common/ \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-6.0 -style=file -i
-find source_iris_autosar_common/source/state_manager/ \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-6.0 -style=file -i
-#find . \( -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*_bsp/*' | xargs clang-format-6.0 -style=file -i
+find $1 \( -iname \*.cl -o -iname \*.hpp -o -iname \*.c -o -iname \*.h -o -iname \*.cpp \) -not -path '*third_party/*' -not -path '*packs/*' -not -path '*config/*' -not -path '*_bsp/*' | xargs clang-format-6.0 -style=file -i
 echo -n "BANG!"

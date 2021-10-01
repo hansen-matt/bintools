@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <SHA_START>..HEAD"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 relative_path_to_format <SHA_START>..HEAD"
 else
-  FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --prune-empty --tree-filter 'clang-helper' "$@"
+  FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --prune-empty --tree-filter 'clang-helper '"$1"'' "$2"
 fi
