@@ -37,10 +37,11 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:$PATH
+export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/SDK/2018.2/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:/usr/local/ARMCompiler6.6.2/bin:$PATH
 export ENVISION_DEPS=$HOME/git/envision/Envision_depends
 export HISTTIMEFORMAT="%m/%d/%y %T "
 export MLM_LICENSE_FILE=27000@10.0.7.22
+export ARMLMD_LICENSE_FILE="27001@172.16.15.225"
 mkdir -p "$HOME/.vim/undo"
 mkdir -p "$HOME/.vim/backup"
 mkdir -p "$HOME/.vim/swap"
