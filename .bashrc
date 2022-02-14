@@ -153,6 +153,7 @@ alias l='ls -CF'
 
 alias gco="git checkout"
 alias gcm="git commit -m"
+alias gcp="git commit --patch"
 alias gcma="git commit -a -m"
 alias gm='git mergetool'
 alias gra="git rebase --abort"
