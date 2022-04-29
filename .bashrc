@@ -167,6 +167,7 @@ alias gd='git diff'
 alias gl='git log'
 alias gf='git fetch'
 alias gsu='git submodule update --recursive'
+alias am='gh pr edit --add-label "automerge" --add-assignee @me'
 
 alias common='cd ~/git/iris_firmware/common'
 alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
