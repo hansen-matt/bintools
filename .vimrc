@@ -204,4 +204,27 @@ augroup CursorLineOnlyInActiveWindow
   autocmd WinLeave * setlocal nocursorline
 augroup END  
 
+" Highlight patterns that match where the cursor is
+set updatetime=100
+" highlight the word under cursor (CursorMoved is inperformant)
+highlight WordUnderCursor cterm=underline gui=underline
+autocmd CursorHold * call HighlightCursorWord()
+function! HighlightCursorWord()
+    " if hlsearch is active, don't overwrite it!
+    let search = getreg('/')
+    let cword = expand('<cword>')
+    if match(cword, search) == -1
+        exe printf('match WordUnderCursor /\V\<%s\>/', escape(cword, '/\'))
+    endif
+endfunction
+
+function TurnOffCaps()
+    let capsState = matchstr(system('xset -q'), '00: Caps Lock:\s\+\zs\(on\|off\)\ze')
+    if capsState == 'on'
+        silent! execute ':!xdotool key Caps_Lock'
+    endif
+endfunction
+
+au InsertLeave * call TurnOffCaps()
+
 "set colorscheme=parsec
