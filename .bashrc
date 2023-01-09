@@ -219,3 +219,22 @@ export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
 source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
 export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
 export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1
+
+##------------------------------------------------------------------------------------------
+## Synopsys variables
+##------------------------------------------------------------------------------------------
+export LM_LICENSE_FILE="27020@10.0.7.22"
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+export SYNOPSYS="/usr/synopsys"
+export VCS_HOME="$SYNOPSYS/vcs/P-2019.06-SP1"
+export VERDI_HOME="$SYNOPSYS/verdi/P-2019.06-SP1"
+export SCL_HOME="$SYNOPSYS/scl/2018.06-SP1/linux64"
+export VC_STATIC_HOME="$SYNOPSYS/vc_static/P-2019.06-SP1"
+export SPYGLASS_BASE="$SYNOPSYS/vc_static/P-2019.06-SP1"
+export SPYGLASS_HOME="$SPYGLASS_BASE/SG_COMPAT/SPYGLASS_HOME"
+export SYN_PATH="$SCL_HOME/bin:$VCS_HOME/bin:$VERDI_HOME/bin:$SPYGLASS_BASE/bin:$SPYGLASS_HOME/bin"
+alias installer="/usr/synopsys/installer/installer -gui"
+alias lic="lmstat -a -c /usr/synopsys/Synopsys_Key_Site_43042_Server_304723_snpslmd.lic"
+
+export PATH="$PATH:$SYN_PATH"
+
