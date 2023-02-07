@@ -37,7 +37,7 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/opt/MATLAB/R2021a/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:/usr/local/ARMCompiler6.6.4/bin:$PATH
+export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:/usr/local/ARMCompiler6.6.4/bin:$PATH
 export ENVISION_DEPS=$HOME/git/envision/Envision_depends
 export HISTTIMEFORMAT="%m/%d/%y %T "
 export MLM_LICENSE_FILE=27000@10.0.7.22
@@ -170,7 +170,7 @@ alias gsu='git submodule update --recursive'
 alias am='gh pr edit --add-label "automerge" --add-assignee @me'
 
 alias common='cd ~/git/iris_firmware/common'
-alias laser='cd ~/git/iris_firmware/laser_v70/firmware/src/luminar'
+alias laser='cd ~/git/iris_firmware/laser_v70/luminar'
 alias system='cd ~/git/iris_firmware/system_v70/firmware/src/luminar'
 alias autosar='cd ~/git/iris_firmware/source_iris_autosar_common'
 alias pr='cd ~/git/iris_firmware/hydra/pp/applications/datapath_pr'
@@ -214,6 +214,19 @@ if [ ! -z "$SET_TITLE" ]; then
   export SET_TITLE=;
 fi
 
+fixlfs ()
+{
+    git lfs uninstall;
+    git reset --hard;
+    git lfs install;
+    git lfs pull;
+    git rm --cached -r .;
+    git reset --hard;
+    git rm .gitattributes;
+    git reset .;
+    git checkout .
+}
+
 # hydra tools
 export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
 source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
@@ -237,4 +250,3 @@ alias installer="/usr/synopsys/installer/installer -gui"
 alias lic="lmstat -a -c /usr/synopsys/Synopsys_Key_Site_43042_Server_304723_snpslmd.lic"
 
 export PATH="$PATH:$SYN_PATH"
-
