@@ -232,6 +232,8 @@ export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
 source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
 export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
 export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1
+export BUILDKITE_GRAPHQL_TOKEN=bkua_a62ee8b856c500941418f69caa0d66488fb332ff
+export ARTIFACTORY_TOKEN=cmVmdGtuOjAxOjE3MTIxNjExODQ6NWtGMXJGaGl6Y0llZU5mMmZObzRTRFZuaW82
 
 ##------------------------------------------------------------------------------------------
 ## Synopsys variables
@@ -246,7 +248,21 @@ export VC_STATIC_HOME="$SYNOPSYS/vc_static/P-2019.06-SP1"
 export SPYGLASS_BASE="$SYNOPSYS/vc_static/P-2019.06-SP1"
 export SPYGLASS_HOME="$SPYGLASS_BASE/SG_COMPAT/SPYGLASS_HOME"
 export SYN_PATH="$SCL_HOME/bin:$VCS_HOME/bin:$VERDI_HOME/bin:$SPYGLASS_BASE/bin:$SPYGLASS_HOME/bin"
+export FPGA_DIR="$HOME/git/iris_firmware/fpga"
 alias installer="/usr/synopsys/installer/installer -gui"
 alias lic="lmstat -a -c /usr/synopsys/Synopsys_Key_Site_43042_Server_304723_snpslmd.lic"
+alias mip=fpga__build_ip
 
 export PATH="$PATH:$SYN_PATH"
+
+function fpga__build_ip {
+  cd ${FPGA_DIR}/common/ip;
+  make;
+  cd -;
+  cd ${FPGA_DIR}/slim_v2_primary/ip;
+  make;
+  cd -;
+  cd ${FPGA_DIR}/slim_v2_secondary/ip;
+  make;
+  cd -;
+}
