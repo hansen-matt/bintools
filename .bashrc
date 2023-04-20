@@ -230,10 +230,11 @@ fixlfs ()
 # hydra tools
 export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
 source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
-export XILINX_VIVADO=/opt/Xilinx/Vivado/2019.1
-export PATH="$PATH:"/opt/Xilinx/Vivado/2019.1
+export XILINX_VIVADO=/tools/Xilinx/Vivado/2022.1
+export PATH="$PATH:"/tools/Xilinx/Vivado/2022.1
 export BUILDKITE_GRAPHQL_TOKEN=bkua_a62ee8b856c500941418f69caa0d66488fb332ff
 export ARTIFACTORY_TOKEN=cmVmdGtuOjAxOjE3MTIxNjExODQ6NWtGMXJGaGl6Y0llZU5mMmZObzRTRFZuaW82
+source /tools/Xilinx/Vivado/2022.1/settings64.sh
 
 ##------------------------------------------------------------------------------------------
 ## Synopsys variables
