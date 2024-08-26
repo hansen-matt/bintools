@@ -1,5 +1,7 @@
 set nocompatible
 
+set belloff=all
+
 "map F1 to toggle search highlighting on and off
 map <F6> :set hlsearch!<CR>
 imap <F6> <ESC>:set hlsearch!<CR>a
