@@ -1,6 +1,7 @@
 set nocompatible
 
 set belloff=all
+set ambw=double "Windows WSL has a broken terminal that starts vim in replace mode. See https://superuser.com/questions/1284561/why-is-vim-starting-in-replace-mode
 
 "map F1 to toggle search highlighting on and off
 map <F6> :set hlsearch!<CR>
