@@ -37,17 +37,11 @@ function cd {
 # editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-export PATH=/usr/local/MATLAB/R2021a/bin:/opt/Xilinx/Vivado/2018.2/bin:~/bin:$HOME/git/iris_firmware/tools/PCAP_to_CSV/build:$HOME/git/iris_firmware/tools/plot_CSV_from_PCAP/python:$HOME/git/iris_firmware/tools/scripts/:/usr/local/ARMCompiler6.6.4/bin:$PATH
-export ENVISION_DEPS=$HOME/git/envision/Envision_depends
+export PATH=~/bin:$PATH
 export HISTTIMEFORMAT="%m/%d/%y %T "
-export MLM_LICENSE_FILE=27000@10.0.7.22
-export ARMLMD_LICENSE_FILE="27001@172.16.15.225"
 mkdir -p "$HOME/.vim/undo"
 mkdir -p "$HOME/.vim/backup"
 mkdir -p "$HOME/.vim/swap"
-
-
-eval $(thefuck --alias)
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -169,14 +163,6 @@ alias gf='git fetch'
 alias gsu='git submodule update --recursive'
 alias am='gh pr edit --add-label "automerge" --add-assignee @me'
 
-alias common='cd ~/git/iris_firmware/common'
-alias laser='cd ~/git/iris_firmware/laser_v70/luminar'
-alias system='cd ~/git/iris_firmware/system_v70/firmware/src/luminar'
-alias autosar='cd ~/git/iris_firmware/source_iris_autosar_common'
-alias pr='cd ~/git/iris_firmware/hydra/pp/applications/datapath_pr'
-alias pl='cd ~/git/iris_firmware/tools/plot_CSV_from_PCAP/python'
-alias vis='cd ~/git/iris_firmware/tools/scripts/'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -227,43 +213,3 @@ fixlfs ()
     git checkout .
 }
 
-# hydra tools
-export HYDRA_TOOLS_PATH=$HOME/git/iris_firmware/hydra/tools
-source $HOME/git/iris_firmware/hydra/scripts/setup-env.sh 1>/dev/null
-export XILINX_VIVADO=/tools/Xilinx/Vivado/2022.1
-export PATH="$PATH:"/tools/Xilinx/Vivado/2022.1
-export BUILDKITE_GRAPHQL_TOKEN=bkua_a62ee8b856c500941418f69caa0d66488fb332ff
-export ARTIFACTORY_TOKEN=cmVmdGtuOjAxOjE3MTIxNjExODQ6NWtGMXJGaGl6Y0llZU5mMmZObzRTRFZuaW82
-source /tools/Xilinx/Vivado/2022.1/settings64.sh
-
-##------------------------------------------------------------------------------------------
-## Synopsys variables
-##------------------------------------------------------------------------------------------
-export LM_LICENSE_FILE="27020@10.0.7.22"
-export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
-export SYNOPSYS="/usr/synopsys"
-export VCS_HOME="$SYNOPSYS/vcs/P-2019.06-SP1"
-export VERDI_HOME="$SYNOPSYS/verdi/P-2019.06-SP1"
-export SCL_HOME="$SYNOPSYS/scl/2018.06-SP1/linux64"
-export VC_STATIC_HOME="$SYNOPSYS/vc_static/P-2019.06-SP1"
-export SPYGLASS_BASE="$SYNOPSYS/vc_static/P-2019.06-SP1"
-export SPYGLASS_HOME="$SPYGLASS_BASE/SG_COMPAT/SPYGLASS_HOME"
-export SYN_PATH="$SCL_HOME/bin:$VCS_HOME/bin:$VERDI_HOME/bin:$SPYGLASS_BASE/bin:$SPYGLASS_HOME/bin"
-export FPGA_DIR="$HOME/git/iris_firmware/fpga"
-alias installer="/usr/synopsys/installer/installer -gui"
-alias lic="lmstat -a -c /usr/synopsys/Synopsys_Key_Site_43042_Server_304723_snpslmd.lic"
-alias mip=fpga__build_ip
-
-export PATH="$PATH:$SYN_PATH"
-
-function fpga__build_ip {
-  cd ${FPGA_DIR}/common/ip;
-  make;
-  cd -;
-  cd ${FPGA_DIR}/slim_v2_primary/ip;
-  make;
-  cd -;
-  cd ${FPGA_DIR}/slim_v2_secondary/ip;
-  make;
-  cd -;
-}
