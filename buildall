@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "ERROR: need to run"
-echo "source [getws]/../../scripts/alpha_live_build_sdk.tcl"
