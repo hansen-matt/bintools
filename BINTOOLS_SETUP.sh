@@ -14,8 +14,6 @@ echo "Making symlink to vimrc"
 rm ~/.vimrc
 ln -s $SCRIPTPATH/.vimrc ~/.vimrc
 
-echo "Configuring git"
-git config --global user.name "Matt Hansen"
-echo "Enter email address for git"
-read email
-git config --global user.email $email
+echo "Making symlink to gitconfig"
+rm ~/.gitconfig
+ln -s $SCRIPTPATH/.gitconfig ~/.gitconfig
