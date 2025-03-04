@@ -214,3 +214,4 @@ fixlfs ()
 }
 
 export PATH="/home/$USER/git/doxygen/build/bin:$PATH"
+export VIDEANTIS_LICENSE_PATH=/home/mhansen/PP_Lic
