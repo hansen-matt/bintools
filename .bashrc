@@ -213,3 +213,4 @@ fixlfs ()
     git checkout .
 }
 
+export PATH="/home/$USER/git/doxygen/build/bin:$PATH"
