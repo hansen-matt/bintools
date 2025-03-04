@@ -213,5 +213,5 @@ fixlfs ()
     git checkout .
 }
 
-export PATH="/home/$USER/git/doxygen/build/bin:$PATH"
+export PATH="/home/$USER/git/doxygen/build/bin:$PATH:/home/$USER/PP_Lic"
 export VIDEANTIS_LICENSE_PATH=/home/mhansen/PP_Lic
