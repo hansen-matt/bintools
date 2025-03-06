@@ -213,5 +213,9 @@ fixlfs ()
     git checkout .
 }
 
-export PATH="/home/$USER/git/doxygen/build/bin:$PATH:/home/$USER/PP_Lic"
+export PATH="/home/$USER/git/doxygen/build/bin:/home/$USER/ARMCompiler6.6.4/bin:$PATH:/home/$USER/PP_Lic"
 export VIDEANTIS_LICENSE_PATH=/home/mhansen/PP_Lic
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
