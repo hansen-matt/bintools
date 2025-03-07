@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Find and close all PRs that are older than 1 year
+DATE=$(date +%F -d'1 year ago')
+gh pr list --search "created:<$DATE" --limit 1000 
+
+# Ask user to confirm
+while true; do
+    read -p "Close all those branches (y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+# Comment and close all PRs
+gh pr list --search "created:<$DATE" --limit 1000 --json number | jq -r '.[] | .number' | xargs -I {} gh pr comment {} -b "Don't fear the github reaper! This PR has been closed because it has been open for more than a year. The branch is still available if it is needed." && gh pr list --search "created:<$DATE" --limit 1000 --json number | jq -r '.[] | .number' | xargs -I {} gh pr close {}
