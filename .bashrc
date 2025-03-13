@@ -161,6 +161,7 @@ alias gd='git diff'
 alias gl='git log'
 alias gf='git fetch'
 alias gsu='git submodule update --recursive'
+alias gsrhh='git submodule foreach --recursive git reset --hard'
 alias am='gh pr edit --add-label "automerge" --add-assignee @me'
 
 # Add an "alert" alias for long running commands.  Use like so:
