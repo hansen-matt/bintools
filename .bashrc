@@ -218,6 +218,7 @@ fixlfs ()
 export PATH="/home/$USER/git/doxygen/build/bin:/home/$USER/ARMCompiler6.6.4/bin:$PATH:/home/$USER/PP_Lic"
 export VIDEANTIS_LICENSE_PATH=/home/mhansen/PP_Lic
 export ARMLMD_LICENSE_FILE="27001@licenses-east.luminartech.com"
+export BUILDKITE_TOKEN=bkua_7487ad1f8049c78d4582bb1760b5482a18bdae30
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
