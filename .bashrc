@@ -164,6 +164,7 @@ alias gsu='git submodule update --recursive'
 alias gsrhh='git submodule update --recursive && git submodule foreach --recursive git reset --hard'
 alias am='gh pr edit --add-label "automerge" --add-assignee @me'
 alias pc='pre-commit run -a'
+alias cart7='xfreerdp  /u:local\\viscomp /p:cameralink /v:172.20.33.7'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
