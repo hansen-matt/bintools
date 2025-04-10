@@ -209,6 +209,7 @@ augroup END
 
 " Highlight patterns that match where the cursor is
 set updatetime=100
+
 " highlight the word under cursor (CursorMoved is inperformant)
 highlight WordUnderCursor cterm=underline gui=underline
 autocmd CursorHold * call HighlightCursorWord()
@@ -231,3 +232,11 @@ endfunction
 au InsertLeave * call TurnOffCaps()
 
 "set colorscheme=parsec
+set GitGutterSignsEnable
+set signcolumn=yes
+highlight! link SignColumn LineNr
+let g:gitgutter_set_sign_backgrounds = 1
+highlight GitgutterAdd guifg=#880000 ctermfg=red  guibg=none ctermbg=none
+highlight GitgutterChange guifg=#880000 ctermfg=red guibg=none ctermbg=none
+highlight GitgutterDelete guifg=#880000 ctermfg=red guibg=none ctermbg=none
+
