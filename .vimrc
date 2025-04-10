@@ -235,7 +235,7 @@ au InsertLeave * call TurnOffCaps()
 set signcolumn=yes
 highlight! link SignColumn LineNr
 let g:gitgutter_set_sign_backgrounds = 1
-highlight GitgutterAdd guifg=#880000 ctermfg=red  guibg=NONE ctermbg=NONE
-highlight GitgutterChange guifg=#880000 ctermfg=red guibg=NONE ctermbg=NONE
+highlight GitgutterAdd guifg=#008800 ctermfg=green  guibg=NONE ctermbg=NONE
+highlight GitgutterChange guifg=#880000 ctermfg=yellow guibg=NONE ctermbg=NONE
 highlight GitgutterDelete guifg=#880000 ctermfg=red guibg=NONE ctermbg=NONE
 
